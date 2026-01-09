@@ -189,7 +189,7 @@ pipeline {
             echo '========== Build Failed =========='
 
             emailext (
-                to: 'h_mokeddem@esi.dz',
+                to: 'asbarroufaida@gmail.com',
                 subject: "Échec du build - ${PROJECT_NAME} #${env.BUILD_NUMBER}",
                 body: """
                 <html>
@@ -227,7 +227,7 @@ pipeline {
         }
 
         always {
-            echo '========== Pipeline terminé =========='
+            echo '========== Pipeline termine =========='
             // Nettoyage si nécessaire
             cleanWs(
                 deleteDirs: true,
