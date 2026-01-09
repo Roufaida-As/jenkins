@@ -18,15 +18,15 @@ pipeline {
                 echo '========== Phase Test =========='
 
                 // Étape 1.1: Lancement des tests unitaires
-                echo 'Exécution des tests unitaires...'
+                echo 'Execution des tests unitaires...'
                 bat './gradlew clean test'
 
                 // Étape 1.2: Archivage des résultats des tests
-                echo 'Archivage des résultats de tests...'
+                echo 'Archivage des resultats de tests...'
                 junit '**/build/test-results/test/*.xml'
 
                 // Étape 1.3: Génération des rapports Cucumber
-                echo 'Génération des rapports Cucumber...'
+                echo 'Generation des rapports Cucumber...'
                 bat './gradlew generateCucumberReports'
                 cucumber buildStatus: 'UNSTABLE',
                     reportTitle: 'Rapport Cucumber',
@@ -55,7 +55,7 @@ pipeline {
         stage('Code Quality') {
             steps {
                 echo '========== Phase Code Quality =========='
-                echo 'Vérification du Quality Gate...'
+                echo 'Verification du Quality Gate...'
 
                 timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
@@ -71,11 +71,11 @@ pipeline {
                 echo '========== Phase Build =========='
 
                 // Étape 4.1: Génération du fichier JAR
-                echo 'Génération du fichier JAR...'
+                echo 'Generation du fichier JAR...'
                 bat './gradlew build -x test'
 
                 // Étape 4.2: Génération de la documentation
-                echo 'Génération de la Javadoc...'
+                echo 'Generation de la Javadoc...'
                 bat './gradlew generateJavadoc'
 
                 // Étape 4.3: Archivage du JAR et de la documentation
@@ -106,7 +106,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '========== Phase Deploy =========='
-                echo 'Déploiement sur MyMavenRepo...'
+                echo 'Deploiement sur MyMavenRepo...'
 
                 withCredentials([usernamePassword(
                     credentialsId: 'maven-repo-credentials',
@@ -116,7 +116,7 @@ pipeline {
                     bat './gradlew publish'
                 }
 
-                echo "✅ Déploiement réussi sur ${MAVEN_REPO_URL}"
+                echo "Déploiement réussi sur ${MAVEN_REPO_URL}"
             }
         }
 
@@ -130,12 +130,12 @@ pipeline {
                 // Notification par Email
                 script {
                     emailext (
-                        to: 'h_mokeddem@esi.dz',
-                        subject: "✅ Déploiement réussi - ${PROJECT_NAME} v${PROJECT_VERSION}",
+                        to: 'asbarroufaida@gmail.com.dz',
+                        subject: "Déploiement réussi - ${PROJECT_NAME} v${PROJECT_VERSION}",
                         body: """
                         <html>
                         <body>
-                            <h2 style="color: green;">✅ Déploiement réussi</h2>
+                            <h2 style="color: green;">Déploiement réussi</h2>
                             <p>Bonjour,</p>
                             <p>Le déploiement de la librairie a été effectué avec succès par <strong>ASBAR ROUFAIDA</strong>.</p>
 
@@ -170,12 +170,12 @@ pipeline {
                     )
                 }
 
-                echo '📧 Email de notification envoyé'
+                echo 'Email de notification envoyé'
 
                 // Notification Slack (optionnel - si configuré)
                 // slackSend (
                 //     color: 'good',
-                //     message: "✅ Déploiement réussi - ${PROJECT_NAME} v${PROJECT_VERSION}\nBuild: #${env.BUILD_NUMBER}"
+                //     message: "Déploiement réussi - ${PROJECT_NAME} v${PROJECT_VERSION}\nBuild: #${env.BUILD_NUMBER}"
                 // )
             }
         }
@@ -190,11 +190,11 @@ pipeline {
 
             emailext (
                 to: 'h_mokeddem@esi.dz',
-                subject: "❌ Échec du build - ${PROJECT_NAME} #${env.BUILD_NUMBER}",
+                subject: "Échec du build - ${PROJECT_NAME} #${env.BUILD_NUMBER}",
                 body: """
                 <html>
                 <body>
-                    <h2 style="color: red;">❌ Échec du build</h2>
+                    <h2 style="color: red;">Échec du build</h2>
                     <p>Bonjour,</p>
                     <p>Le pipeline Jenkins a échoué.</p>
 
@@ -218,7 +218,7 @@ pipeline {
 
             // slackSend (
             //     color: 'danger',
-            //     message: "❌ Build échoué - ${PROJECT_NAME} #${env.BUILD_NUMBER}\n${env.BUILD_URL}"
+            //     message: "Build échoué - ${PROJECT_NAME} #${env.BUILD_NUMBER}\n${env.BUILD_URL}"
             // )
         }
 
