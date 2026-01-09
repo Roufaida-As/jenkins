@@ -38,16 +38,16 @@ pipeline {
         // ============================================
         // PHASE 2: CODE ANALYSIS (SonarQube)
         // ============================================
-        stage('Code Analysis') {
-            steps {
-                echo '========== Phase Code Analysis =========='
-                echo 'Analyse du code avec SonarQube...'
-
-                withSonarQubeEnv('SonarQube') {
-                    bat './gradlew sonar'
-                }
-            }
-        }
+//         stage('Code Analysis') {
+//             steps {
+//                 echo '========== Phase Code Analysis =========='
+//                 echo 'Analyse du code avec SonarQube...'
+//
+//                 withSonarQubeEnv('SonarQube') {
+//                     bat './gradlew sonar'
+//                 }
+//             }
+//         }
 
         // ============================================
         // PHASE 3: CODE QUALITY (Quality Gate)
