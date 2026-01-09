@@ -116,7 +116,7 @@ pipeline {
                     bat './gradlew publish'
                 }
 
-                echo "Déploiement réussi sur ${MAVEN_REPO_URL}"
+                echo "Deploiement reussi sur ${MAVEN_REPO_URL}"
             }
         }
 
@@ -131,7 +131,7 @@ pipeline {
                 script {
                     emailext (
                         to: 'asbarroufaida@gmail.com.dz',
-                        subject: "Déploiement réussi - ${PROJECT_NAME} v${PROJECT_VERSION}",
+                        subject: "Deploiement reussi - ${PROJECT_NAME} v${PROJECT_VERSION}",
                         body: """
                         <html>
                         <body>
@@ -170,7 +170,7 @@ pipeline {
                     )
                 }
 
-                echo 'Email de notification envoyé'
+                echo 'Email de notification envoye'
 
                 // Notification Slack (optionnel - si configuré)
                 // slackSend (
