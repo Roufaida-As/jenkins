@@ -130,7 +130,7 @@ pipeline {
                 // Notification par Email
                 script {
                     emailext (
-                        to: 'asbarroufaida@gmail.com.dz',
+                        to: 'asbarroufaida@gmail.com',
                         subject: "Deploiement reussi - ${PROJECT_NAME} v${PROJECT_VERSION}",
                         body: """
                         <html>
