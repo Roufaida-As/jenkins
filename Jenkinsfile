@@ -108,6 +108,7 @@ pipeline {
                 echo '========== Phase Deploy =========='
                 echo 'Deploiement sur MyMavenRepo...'
 
+
                 withCredentials([usernamePassword(
                     credentialsId: 'maven-repo-credentials',
                     usernameVariable: 'MAVEN_USERNAME',
