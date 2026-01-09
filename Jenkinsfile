@@ -136,11 +136,11 @@ pipeline {
                         body: """
                         <html>
                         <body>
-                            <h2 style="color: green;">Déploiement réussi</h2>
+                            <h2 style="color: green;">Deploiement reussi</h2>
                             <p>Bonjour,</p>
-                            <p>Le déploiement de la librairie a été effectué avec succès par <strong>ASBAR ROUFAIDA</strong>.</p>
+                            <p>Le deploiement de la librairie a ete effectue avec succès par <strong>ASBAR ROUFAIDA</strong>.</p>
 
-                            <h3>Détails du déploiement:</h3>
+                            <h3>Details du deploiement:</h3>
                             <ul>
                                 <li><strong>Projet:</strong> ${PROJECT_NAME}</li>
                                 <li><strong>Version:</strong> ${PROJECT_VERSION}</li>
