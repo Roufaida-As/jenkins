@@ -89,10 +89,13 @@ pipeline {
                     allowEmptyArchive: true
 
                 publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
                     reportDir: 'build/docs/javadoc',
                     reportFiles: 'index.html',
                     reportName: 'Javadoc',
-                    keepAll: true
+                    reportTitles: 'Documentation Javadoc'
                 ])
             }
         }
