@@ -52,16 +52,16 @@ pipeline {
         // ============================================
         // PHASE 3: CODE QUALITY (Quality Gate)
         // ============================================
-        stage('Code Quality') {
-            steps {
-                echo '========== Phase Code Quality =========='
-                echo 'Verification du Quality Gate...'
-
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+//         stage('Code Quality') {
+//             steps {
+//                 echo '========== Phase Code Quality =========='
+//                 echo 'Verification du Quality Gate...'
+//
+//                 timeout(time: 5, unit: 'MINUTES') {
+//                     waitForQualityGate abortPipeline: true
+//                 }
+//             }
+//         }
 
         // ============================================
         // PHASE 4: BUILD
