@@ -59,7 +59,7 @@ public class MatrixSteps {
             i=i+1;
         }
         mat.setData(data);
-        transposeMatrix = MatrixMathematics.transpose(mat).getValues();
+        transposeMatrix = MatrixMathematics.transpose(mat).getData();
     }
 
     @Then("The result of transpose is")
@@ -93,7 +93,7 @@ public class MatrixSteps {
             i=i+1;
         }
         mat.setData(data);
-        inverseMatrix = MatrixMathematics.inverse(mat).getValues();
+        inverseMatrix = MatrixMathematics.inverse(mat).getData();
     }
 
     @Then("The result of inverse is")
@@ -127,7 +127,7 @@ public class MatrixSteps {
             i=i+1;
         }
         mat.setData(data);
-        cofactorMatrix = MatrixMathematics.cofactor(mat).getValues();
+        cofactorMatrix = MatrixMathematics.cofactor(mat).getData();
     }
 
     @Then("The result of cofactor is")

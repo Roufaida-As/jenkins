@@ -51,6 +51,7 @@ jacocoTestReport {
 sonarqube {
     properties {
         property "sonar.projectKey", "TP7-API-INTEGRATION"
+        property "sonar.projectName", "TP7-API-INTEGRATION"
         property "sonar.host.url", "http://localhost:9000/"
 
         property "sonar.sources", "src/main/java"
