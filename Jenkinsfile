@@ -78,7 +78,6 @@ pipeline {
                 echo 'Generation de la Javadoc...'
                 bat 'gradlew generateJavadoc'
 
-
                 // Étape 4.3: Archivage du JAR et de la documentation
                 echo 'Archivage des artefacts...'
                 archiveArtifacts artifacts: '**/build/libs/*.jar',
