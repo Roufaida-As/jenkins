@@ -57,9 +57,14 @@ pipeline {
                 echo '========== Phase Code Quality =========='
                 echo 'Verification du Quality Gate...'
 
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
+               timeout(time: 10, unit: 'MINUTES') {
+                           script {
+                               def qg = waitForQualityGate()
+                               if (qg.status != 'OK') {
+                                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                               }
+                           }
+                       }
             }
         }
 
@@ -222,13 +227,15 @@ pipeline {
 
         always {
             echo '========== Pipeline termine =========='
-            // Nettoyage si nécessaire
-            cleanWs(
-                deleteDirs: true,
-                disableDeferredWipeout: true,
-                notFailBuild: true,
-                patterns: [[pattern: 'build/**', type: 'INCLUDE']]
-            )
+            // Only clean if the build was successful to allow debugging on failure
+            script {
+                if (currentBuild.result == 'SUCCESS') {
+                    cleanWs(
+                        deleteDirs: true,
+                        patterns: [[pattern: 'build/**', type: 'INCLUDE']]
+                    )
+                }
+            }
         }
     }
 }
