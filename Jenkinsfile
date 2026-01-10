@@ -143,7 +143,7 @@ pipeline {
                         <body>
                             <h2 style="color: green;">Deploiement reussi</h2>
                             <p>Bonjour,</p>
-                            <p>Le deploiement de la librairie a ete effectue avec succès par <strong>ASBAR ROUFAIDA</strong>.</p>
+                            <p>Le deploiement de la librairie a ete effectue avec succes par <strong>ASBAR ROUFAIDA</strong>.</p>
 
                             <h3>Details du deploiement:</h3>
                             <ul>
