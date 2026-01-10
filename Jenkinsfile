@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+            jdk 'JDK11'
+    }
 
     environment {
         // Variables d'environnement
@@ -44,7 +47,7 @@ pipeline {
                 echo 'Analyse du code avec SonarQube...'
 
                 withSonarQubeEnv('SonarQube') {
-                    bat 'gradlew sonar'
+                bat 'gradlew compileJava sonar'
                 }
             }
         }

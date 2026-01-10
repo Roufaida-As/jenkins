@@ -51,15 +51,11 @@ jacocoTestReport {
 sonarqube {
     properties {
         property "sonar.projectKey", "TP7-API-INTEGRATION"
-        property "sonar.projectName", "TP7-API-INTEGRATION"
         property "sonar.host.url", "http://localhost:9000/"
-//        property "sonar.sources", "src/main/java"
-//        property "sonar.tests", "src/test/java"
-//        property "sonar.java.binaries", "build/classes"
-//        property "sonar.junit.reportPaths", "build/test-results/test"
-//        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
 
-        // AJOUT : Skip la compilation Gradle (recommandé par votre ami)
+        property "sonar.sources", "src/main/java"
+        property "sonar.java.binaries", "build/classes/java/main"
+
         property "sonar.gradle.skipCompile", "false"
     }
 }
