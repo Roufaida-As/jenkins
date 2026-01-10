@@ -19,7 +19,7 @@ pipeline {
 
                 // Étape 1.1: Lancement des tests unitaires
                 echo 'Execution des tests unitaires...'
-                bat './gradlew clean test'
+                bat 'gradlew clean test'
 
                 // Étape 1.2: Archivage des résultats des tests
                 echo 'Archivage des resultats de tests...'
@@ -27,7 +27,7 @@ pipeline {
 
                 // Étape 1.3: Génération des rapports Cucumber
                 echo 'Generation des rapports Cucumber...'
-                bat './gradlew generateCucumberReports'
+                bat 'gradlew generateCucumberReports'
                 cucumber buildStatus: 'UNSTABLE',
                     reportTitle: 'Rapport Cucumber',
                     fileIncludePattern: '**/*.json',
@@ -38,30 +38,30 @@ pipeline {
         // ============================================
         // PHASE 2: CODE ANALYSIS (SonarQube)
         // ============================================
-//         stage('Code Analysis') {
-//             steps {
-//                 echo '========== Phase Code Analysis =========='
-//                 echo 'Analyse du code avec SonarQube...'
-//
-//                 withSonarQubeEnv('SonarQube') {
-//                     bat './gradlew sonar'
-//                 }
-//             }
-//         }
+        stage('Code Analysis') {
+            steps {
+                echo '========== Phase Code Analysis =========='
+                echo 'Analyse du code avec SonarQube...'
+
+                withSonarQubeEnv('SonarQube') {
+                    bat 'gradlew sonar'
+                }
+            }
+        }
 
         // ============================================
         // PHASE 3: CODE QUALITY (Quality Gate)
         // ============================================
-//         stage('Code Quality') {
-//             steps {
-//                 echo '========== Phase Code Quality =========='
-//                 echo 'Verification du Quality Gate...'
-//
-//                 timeout(time: 5, unit: 'MINUTES') {
-//                     waitForQualityGate abortPipeline: true
-//                 }
-//             }
-//         }
+        stage('Code Quality') {
+            steps {
+                echo '========== Phase Code Quality =========='
+                echo 'Verification du Quality Gate...'
+
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 
         // ============================================
         // PHASE 4: BUILD
@@ -72,11 +72,11 @@ pipeline {
 
                 // Étape 4.1: Génération du fichier JAR
                 echo 'Generation du fichier JAR...'
-                bat './gradlew build -x test'
+                bat 'gradlew build -x test'
 
                 // Étape 4.2: Génération de la documentation
                 echo 'Generation de la Javadoc...'
-                bat './gradlew generateJavadoc'
+                bat 'gradlew generateJavadoc'
 
                 // Étape 4.3: Archivage du JAR et de la documentation
                 echo 'Archivage des artefacts...'
@@ -108,13 +108,12 @@ pipeline {
                 echo '========== Phase Deploy =========='
                 echo 'Deploiement sur MyMavenRepo...'
 
-
                 withCredentials([usernamePassword(
                     credentialsId: 'maven-repo-credentials',
                     usernameVariable: 'MAVEN_USERNAME',
                     passwordVariable: 'MAVEN_PASSWORD'
                 )]) {
-                    bat './gradlew publish'
+                    bat 'gradlew publish'
                 }
 
                 echo "Deploiement reussi sur ${MAVEN_REPO_URL}"
@@ -132,6 +131,7 @@ pipeline {
                 script {
                     emailext (
                         to: 'asbarroufaida@gmail.com',
+                        replyTo: 'mr_asbar@esi.dz',
                         subject: "Deploiement reussi - ${PROJECT_NAME} v${PROJECT_VERSION}",
                         body: """
                         <html>
@@ -148,6 +148,9 @@ pipeline {
                                 <li><strong>Date:</strong> ${new Date().format('dd/MM/yyyy HH:mm:ss')}</li>
                                 <li><strong>Branch:</strong> ${env.BRANCH_NAME}</li>
                             </ul>
+
+                            <h3>Quality Gate SonarQube:</h3>
+                            <p><a href="http://localhost:9000/dashboard?id=TP7-API-INTEGRATION">Voir l'analyse SonarQube</a></p>
 
                             <h3>Repository Maven:</h3>
                             <p><a href="${MAVEN_REPO_URL}">${MAVEN_REPO_URL}</a></p>
@@ -166,18 +169,11 @@ pipeline {
                         </body>
                         </html>
                         """,
-                        mimeType: 'text/html',
-                        from: 'mr_asbar@esi.dz'
+                        mimeType: 'text/html'
                     )
                 }
 
                 echo 'Email de notification envoye'
-
-                // Notification Slack (optionnel - si configuré)
-                // slackSend (
-                //     color: 'good',
-                //     message: "Déploiement réussi - ${PROJECT_NAME} v${PROJECT_VERSION}\nBuild: #${env.BUILD_NUMBER}"
-                // )
             }
         }
     }
@@ -191,15 +187,16 @@ pipeline {
 
             emailext (
                 to: 'asbarroufaida@gmail.com',
-                subject: "Échec du build - ${PROJECT_NAME} #${env.BUILD_NUMBER}",
+                replyTo: 'mr_asbar@esi.dz',
+                subject: "Echec du build - ${PROJECT_NAME} #${env.BUILD_NUMBER}",
                 body: """
                 <html>
                 <body>
-                    <h2 style="color: red;">Échec du build</h2>
+                    <h2 style="color: red;">Echec du build</h2>
                     <p>Bonjour,</p>
-                    <p>Le pipeline Jenkins a échoué.</p>
+                    <p>Le pipeline Jenkins a echoue.</p>
 
-                    <h3>Détails:</h3>
+                    <h3>Details:</h3>
                     <ul>
                         <li><strong>Projet:</strong> ${PROJECT_NAME}</li>
                         <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
@@ -213,14 +210,10 @@ pipeline {
                 </body>
                 </html>
                 """,
-                mimeType: 'text/html',
-                from: 'mr_asbar@esi.dz'
+                mimeType: 'text/html'
             )
 
-            // slackSend (
-            //     color: 'danger',
-            //     message: "Build échoué - ${PROJECT_NAME} #${env.BUILD_NUMBER}\n${env.BUILD_URL}"
-            // )
+            echo 'Email d\'echec envoye'
         }
 
         success {
