@@ -181,7 +181,23 @@ pipeline {
                     )
                 }
 
-                echo 'Email de notification envoye'
+                // Notification Slack
+                slackSend (
+                    webhookUrl: credentials('slack-webhook'),
+                    channel: '#jenkins',
+                    color: 'good',
+                    message: """
+                *Deploiement reussi*
+                *Projet* : ${PROJECT_NAME}
+                *Version* : ${PROJECT_VERSION}
+                *Build* : #${env.BUILD_NUMBER}
+                *Branch* : ${env.BRANCH_NAME}
+                ${env.BUILD_URL}
+                """
+                )
+
+
+                echo 'Email et slack de notification envoye'
             }
         }
     }
@@ -221,7 +237,21 @@ pipeline {
                 mimeType: 'text/html'
             )
 
-            echo 'Email d\'echec envoye'
+            slackSend (
+                webhookUrl: credentials('slack-webhook'),
+                channel: '#jenkins',
+                color: 'danger',
+                message: """
+            *Build échoué*
+            *Projet* : ${PROJECT_NAME}
+            *Build* : #${env.BUILD_NUMBER}
+            *Branch* : ${env.BRANCH_NAME}
+             Logs : ${env.BUILD_URL}console
+            """
+            )
+
+
+            echo 'Email et slack d\'echec envoye'
         }
 
         success {
