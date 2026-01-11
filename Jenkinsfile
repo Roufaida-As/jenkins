@@ -185,6 +185,7 @@ pipeline {
 
                 // Notification Slack
                slackSend (
+                   baseUrl: 'https://hooks.slack.com/services/',
                    tokenCredentialId: 'slack-webhook', // Force l'utilisation de votre secret
                    channel: '#jenkins',
                    color: 'good',
@@ -239,6 +240,9 @@ pipeline {
             )
 
             slackSend (
+                baseUrl: 'https://hooks.slack.com/services/',
+                tokenCredentialId: 'slack-webhook', // Force l'utilisation de votre secret
+
                 channel: '#jenkins',
                 color: 'danger',
                 message: """
