@@ -164,7 +164,7 @@ pipeline {
                             <p><a href="${MAVEN_REPO_URL}">${MAVEN_REPO_URL}</a></p>
 
                             <h3>Utilisation:</h3>
-                            <pre>implementation "org.example:${PROJECT_NAME}:${PROJECT_VERSION}"</pre>
+                            <pre>implementation "asbar-roufaida:${PROJECT_NAME}:${PROJECT_VERSION}"</pre>
 
                             <h3>Liens utiles:</h3>
                             <ul>
