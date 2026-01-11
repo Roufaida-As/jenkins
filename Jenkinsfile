@@ -238,7 +238,6 @@ pipeline {
             )
 
             slackSend (
-                webhookUrl: credentials('slack-webhook'),
                 channel: '#jenkins',
                 color: 'danger',
                 message: """
